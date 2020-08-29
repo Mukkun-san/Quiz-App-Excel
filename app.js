@@ -7,7 +7,7 @@ var cors = require("cors");
 
 var app = express();
 
-app.use(cors({ origin: ["http://localhost:8080"] }))
+app.use(cors({ origin: ["http://localhost:8080","https://quizappexcel.herokuapp.com/"] }))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -83,5 +83,5 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
 });
-
-app.listen(3000);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT);
