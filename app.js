@@ -41,7 +41,7 @@ app.get('/', (req, response) => {
       let j = 0;
       let Tranges = [];
       while (res.data.valueRanges[j]) {
-        if (res.data.valueRanges[j].values && res.data.valueRanges[j].values[j] != "Result") {
+        if (res.data.valueRanges[j].values && ranges[j] != "Result") {
           Tranges.push(ranges[j])
           let skip = 0;
           let tempQuests = res.data.valueRanges[j].values.map((x) => {
