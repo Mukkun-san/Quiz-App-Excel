@@ -7,9 +7,8 @@ var cors = require("cors");
 
 var app = express();
 
-let origin = (process.env.NODE_ENV !== 'development' ? "https://quiz-excel-random.web.app" : "http://localhost:8080" );
 
-app.use(cors({ origin }))
+app.use(cors({ origin : "*" }))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
