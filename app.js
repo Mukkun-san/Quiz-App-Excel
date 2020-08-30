@@ -4,9 +4,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require("cors");
 const { google } = require('googleapis');
-const fs = require('fs');
 
-const { authorize, listMajors } = require('./sheets.js');
+const { authorize, appendToSheet } = require('./sheets.js');
 
 var app = express();
 
@@ -21,7 +20,6 @@ const sheets = google.sheets({ version: 'v4', auth: "AIzaSyDdfiGWXVGrZzGV04siZKC
 app.get('/', (req, response) => {
   let ranges = [];
   let questions = [];
-  let parsedQuestions = [];
 
   sheets.spreadsheets.get({
     spreadsheetId: '19myrR21IIGa0kGdDYCgUxr46-PaEITa16nXJJNq28O4',
@@ -71,7 +69,7 @@ app.get('/', (req, response) => {
 })
 
 app.post('/sheet', (req, res) => {
-  authorize(listMajors, JSON.stringify(req.body));
+  authorize(appendToSheet, JSON.stringify(req.body));
   res.sendStatus(200)
 })
 

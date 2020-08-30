@@ -2,8 +2,7 @@ const readline = require('readline');
 const { google } = require('googleapis');
 const fs = require('fs');
 
-var express = require('express');
-var app = express();
+const sendMail = require('./mail');
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 // The file token.json stores the user's access and refresh tokens, and is
@@ -72,21 +71,22 @@ function getNewToken(oAuth2Client, callback) {
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
-function listMajors(auth, res) {
+function appendToSheet(auth, response) {
 
-    console.log(JSON.parse(res));
+    const res = JSON.parse(response);
+
     const sheets = google.sheets({ version: 'v4', auth });
 
     const request = {
 
-        spreadsheetId: '1t3Xnap4y-Nt06XZpv7SXkhTeUbEJbWdocKj7a2psR8g',
+        spreadsheetId: '19myrR21IIGa0kGdDYCgUxr46-PaEITa16nXJJNq28O4',
 
-        range: 'Sheet1',
+        range: 'Result',
 
-        valueInputOption: 'raw',
+        valueInputOption: 'USER_ENTERED',
 
         resource: {
-            values: [[res, 2, 3, 4, 5, 6, 7]]
+            values: [[res.name, res.email, res.class, res.date, res.score, res.score, res.nbQs]]
         },
 
     };
@@ -94,4 +94,4 @@ function listMajors(auth, res) {
     sheets.spreadsheets.values.append(request)
 }
 
-module.exports = { authorize, listMajors };
+module.exports = { authorize, appendToSheet };
