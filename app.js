@@ -2,21 +2,21 @@ var createError = require('http-errors');
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const { google } = require('googleapis');
 var cors = require("cors");
+const { google } = require('googleapis');
+const fs = require('fs');
+
+const { authorize, listMajors } = require('./sheets.js');
 
 var app = express();
 
-
-app.use(cors({ origin : "*" }))
+app.use(cors({ origin: "*" }))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 const sheets = google.sheets({ version: 'v4', auth: "AIzaSyDdfiGWXVGrZzGV04siZKCdLYlsTdQVciM" });
-
-
 
 app.get('/', (req, response) => {
   let ranges = [];
@@ -70,6 +70,11 @@ app.get('/', (req, response) => {
 
 })
 
+app.post('/sheet', (req, res) => {
+  authorize(listMajors, JSON.stringify(req.body));
+  res.sendStatus(200)
+})
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -84,5 +89,6 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
 });
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT);
