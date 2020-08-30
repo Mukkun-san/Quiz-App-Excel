@@ -86,7 +86,7 @@ function appendToSheet(auth, response) {
         valueInputOption: 'USER_ENTERED',
 
         resource: {
-            values: [[res.name, res.email, res.class, res.date, res.score, res.score, res.nbQs]]
+            values: [[res.name, res.email, res.class, res.date, res.score, res.time, res.nbQs]]
         },
 
     };
