@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cors = require("cors");
 const { google } = require('googleapis');
 
-const { authorize, appendToSheet } = require('./sheets.js');
+const { authorize, appendToSheet, getFromSheet } = require('./sheets.js');
 
 var app = express();
 
@@ -15,62 +15,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const sheets = google.sheets({ version: 'v4', auth: "AIzaSyDdfiGWXVGrZzGV04siZKCdLYlsTdQVciM" });
 
-app.get('/', (req, response) => {
-  let ranges = [];
-  let questions = [];
 
-  sheets.spreadsheets.get({
-    spreadsheetId: '19myrR21IIGa0kGdDYCgUxr46-PaEITa16nXJJNq28O4',
-  }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err);
-    let i = 0
-    while (res.data.sheets[i]) {
-      ranges.push(res.data.sheets[i].properties.title);
-      i++
-    }
-    sheets.spreadsheets.values.batchGet({
-      spreadsheetId: '19myrR21IIGa0kGdDYCgUxr46-PaEITa16nXJJNq28O4',
-      ranges: ranges
-    }, (err, res) => {
-
-      if (err) return console.log('The API returned an error: ' + err);
-      let j = 0;
-      let Tranges = [];
-      while (res.data.valueRanges[j]) {
-        if (res.data.valueRanges[j].values && ranges[j] != "Result") {
-          Tranges.push(ranges[j])
-          let skip = 0;
-          let tempQuests = res.data.valueRanges[j].values.map((x) => {
-            if (skip > 0) {
-              const temp = {
-                Question: x[0],
-                A: x[1],
-                B: x[2],
-                C: x[3],
-                D: x[4],
-                Correct_Answer: x[5]
-              }
-              return temp;
-            }
-            skip++;
-          });
-          tempQuests.shift()
-          questions.push({ sheet: ranges[j], Questions: tempQuests });
-        }
-        j++
-      }
-      questions.unshift(Tranges);
-      response.json(questions);
-    });
+app.get('/', (req, res) => {
+  authorize(appendToSheet, '{ "name": "erqdf" }').then(async (auth) => {
+    const sheetData = await getFromSheet(auth);
+    res.send(JSON.stringify(sheetData))
   });
-
 })
 
+authorize(appendToSheet, '{ "name": "erqdf" }').then(async (credentials) => {
+  await appendToSheet(credentials, '{"name":"cool"}');
+});
+
 app.post('/sheet', (req, res) => {
-  authorize(appendToSheet, JSON.stringify(req.body));
-  res.sendStatus(200)
+  authorize(appendToSheet, '{ "name": "erqdf" }').then(async (credentials) => {
+    await appendToSheet(credentials, JSON.stringify(req.body));
+  });
 })
 
 // catch 404 and forward to error handler
