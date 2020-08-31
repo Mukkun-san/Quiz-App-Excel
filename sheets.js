@@ -81,7 +81,7 @@ async function appendToSheet(auth, response) {
 
         spreadsheetId: '1q_QzlenVYyTuPGDbudIy1vQvFnOhEYJZZecocIwZsKI',
 
-        range: 'Result',
+        range: 'Result!A1:G1',
 
         valueInputOption: 'USER_ENTERED',
 
