@@ -21,10 +21,6 @@ app.get('/', (req, res) => {
   });
 })
 
-authorize(appendToSheet, '{ "name": "erqdf" }').then(async (credentials) => {
-  await appendToSheet(credentials, '{"name":"cool"}');
-});
-
 app.post('/sheet', (req, res) => {
   authorize(appendToSheet, '{ "name": "erqdf" }').then(async (credentials) => {
     await appendToSheet(credentials, JSON.stringify(req.body));
