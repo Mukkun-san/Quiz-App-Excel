@@ -3,7 +3,6 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require("cors");
-const { google } = require('googleapis');
 
 const { authorize, appendToSheet, getFromSheet } = require('./sheets.js');
 
@@ -14,8 +13,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-
 
 app.get('/', (req, res) => {
   authorize(appendToSheet, '{ "name": "erqdf" }').then(async (auth) => {
