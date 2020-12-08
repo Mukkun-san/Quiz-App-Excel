@@ -6,15 +6,16 @@ const jwt = require("jsonwebtoken");
 const authorize = require("./authorization");
 
 //--------- BEGIN- Admin Requests ----------//
-router.delete("/:_id", authorize.admin, (req, res) => {
+router.delete("/:_id", authorize.admin, async (req, res) => {
   const _id = req.params._id;
+  const student = await Student.findOne({ _id });
   Student.deleteOne({ _id })
     .then((result) => {
       console.log(result);
       if (result.deletedCount) {
         res.json({
           type: "success",
-          msg: `Student "${Student.name}" was deleted from class "${Student.class}"`,
+          msg: `Student "${student.name}" was deleted from class "${student.class}"`,
         });
       } else {
         res.json({

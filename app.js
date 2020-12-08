@@ -17,6 +17,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use(express.static("public"));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -29,8 +30,8 @@ app.post("/sheet", (req, res) => {
   });
 });
 
-app.get("/", (req, res) => {
-  res.sendStatus(200);
+app.use(function (req, res, next) {
+  res.sendFile(__dirname + "/public/index.html");
 });
 
 const PORT = process.env.PORT || 4545;
