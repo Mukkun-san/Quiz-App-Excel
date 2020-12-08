@@ -1,0 +1,2 @@
+GET  http://localhost:4545/student/verifyToken
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbGlAZ21haWwuY29tIiwiaWF0IjoxNjA3MzkzNzI4fQ.UV330XBouCo9cBuD1PfFYwX9PpUc5bUrILfMmo2rCaU
