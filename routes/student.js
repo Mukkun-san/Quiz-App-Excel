@@ -7,8 +7,6 @@ const authorize = require("./authorization");
 
 //--------- BEGIN- Admin Requests ----------//
 router.delete("/:_id", authorize.admin, async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-
   const _id = req.params._id;
   const student = await Student.findOne({ _id });
   Student.deleteOne({ _id })
@@ -32,8 +30,6 @@ router.delete("/:_id", authorize.admin, async (req, res) => {
 });
 
 router.post("/confirm", authorize.admin, async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-
   const _id = req.body._id;
   try {
     let student = await Student.findOne({ _id });
@@ -55,8 +51,6 @@ router.post("/confirm", authorize.admin, async (req, res) => {
 });
 
 router.get("/all", authorize.admin, (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-
   Student.find()
     .sort({ fullName: 1 })
     .exec()
@@ -73,8 +67,6 @@ router.get("/all", authorize.admin, (req, res) => {
 //--------- BEGIN Student Requests ----------//
 
 router.post("/signup", async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-
   const data = {
     name: req.body.fullName,
     email: req.body.email,
@@ -130,8 +122,6 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-
   const data = {
     email: req.body.email,
     password: req.body.password,
@@ -174,12 +164,10 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/class", authorize.student, (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
   res.json({ auth: "" });
 });
 
 router.get("/verifyToken", authorize.student, (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
   res.json({ authorized: true });
 });
 

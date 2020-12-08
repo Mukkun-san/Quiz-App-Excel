@@ -4,8 +4,6 @@ const jwt = require("jsonwebtoken");
 const auth = require("./authorization");
 
 router.post("/login", async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-
   const data = {
     email: req.body.email,
     password: req.body.password,
@@ -26,7 +24,6 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/verifyToken", auth.admin, (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
   res.json({ authorized: true });
 });
 
