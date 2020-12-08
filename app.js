@@ -10,7 +10,13 @@ const { authorize, appendToSheet, getFromSheet } = require("./sheets.js");
 
 var app = express();
 
-app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: false,
+    methods: ["GET", "DELETE", "POST"],
+    allowedHeaders: ["Authorization"],
+  })
+);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
