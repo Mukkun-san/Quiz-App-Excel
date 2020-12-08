@@ -7,6 +7,8 @@ const authorize = require("./authorization");
 
 //--------- BEGIN- Admin Requests ----------//
 router.delete("/:_id", authorize.admin, async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+
   const _id = req.params._id;
   const student = await Student.findOne({ _id });
   Student.deleteOne({ _id })
@@ -30,6 +32,8 @@ router.delete("/:_id", authorize.admin, async (req, res) => {
 });
 
 router.post("/confirm", authorize.admin, async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+
   const _id = req.body._id;
   try {
     let student = await Student.findOne({ _id });
@@ -51,6 +55,8 @@ router.post("/confirm", authorize.admin, async (req, res) => {
 });
 
 router.get("/all", authorize.admin, (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+
   Student.find()
     .sort({ fullName: 1 })
     .exec()
