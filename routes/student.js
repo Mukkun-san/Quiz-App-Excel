@@ -4,10 +4,9 @@ const Student = require("../mongodb/schemas/Student");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authorize = require("./authorization");
-const cors = require("../extras/corsFix");
 
 //--------- BEGIN- Admin Requests ----------//
-router.delete("/:_id", cors, authorize.admin, (req, res) => {
+router.delete("/:_id", authorize.admin, (req, res) => {
   const _id = req.params._id;
   Student.deleteOne({ _id })
     .then((result) => {
@@ -29,7 +28,7 @@ router.delete("/:_id", cors, authorize.admin, (req, res) => {
     });
 });
 
-router.post("/confirm", cors, authorize.admin, async (req, res) => {
+router.post("/confirm", authorize.admin, async (req, res) => {
   const _id = req.body._id;
   try {
     let student = await Student.findOne({ _id });
@@ -50,7 +49,7 @@ router.post("/confirm", cors, authorize.admin, async (req, res) => {
   }
 });
 
-router.get("/all", cors, authorize.admin, (req, res) => {
+router.get("/all", authorize.admin, (req, res) => {
   Student.find()
     .sort({ fullName: 1 })
     .exec()
@@ -66,7 +65,7 @@ router.get("/all", cors, authorize.admin, (req, res) => {
 
 //--------- BEGIN Student Requests ----------//
 
-router.post("/signup", cors, async (req, res) => {
+router.post("/signup", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
 
   const data = {
@@ -123,7 +122,7 @@ router.post("/signup", cors, async (req, res) => {
   }
 });
 
-router.post("/login", cors, async (req, res) => {
+router.post("/login", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
 
   const data = {
@@ -167,12 +166,12 @@ router.post("/login", cors, async (req, res) => {
   }
 });
 
-router.get("/class", cors, authorize.student, (req, res) => {
+router.get("/class", authorize.student, (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.json({ auth: "" });
 });
 
-router.get("/verifyToken", cors, authorize.student, (req, res) => {
+router.get("/verifyToken", authorize.student, (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.json({ authorized: true });
 });

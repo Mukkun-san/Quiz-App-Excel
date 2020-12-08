@@ -2,9 +2,8 @@ const router = require("express").Router();
 const validate = require("./dataValidation");
 const jwt = require("jsonwebtoken");
 const auth = require("./authorization");
-const cors = require("../extras/corsFix");
 
-router.post("/login", cors, async (req, res) => {
+router.post("/login", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
 
   const data = {
@@ -26,7 +25,7 @@ router.post("/login", cors, async (req, res) => {
   }
 });
 
-router.get("/verifyToken", cors, auth.admin, (req, res) => {
+router.get("/verifyToken", auth.admin, (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.json({ authorized: true });
 });
