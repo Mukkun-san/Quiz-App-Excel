@@ -9,16 +9,7 @@ require("./mongodb");
 const { authorize, appendToSheet, getFromSheet } = require("./sheets.js");
 
 var app = express();
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
 
-app.use(cors({ origin: "http://localhost:8080" }));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
