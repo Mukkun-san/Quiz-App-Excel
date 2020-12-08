@@ -2,8 +2,9 @@ const router = require("express").Router();
 const validate = require("./dataValidation");
 const jwt = require("jsonwebtoken");
 const auth = require("./authorization");
+const cors = require("../extras/corsFix");
 
-router.post("/login", async (req, res) => {
+router.post("/login", cors, async (req, res) => {
   const data = {
     email: req.body.email,
     password: req.body.password,
@@ -23,7 +24,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/verifyToken", auth.admin, (req, res) => {
+router.get("/verifyToken", cors, auth.admin, (req, res) => {
   res.json({ authorized: true });
 });
 
