@@ -5,6 +5,8 @@ const auth = require("./authorization");
 const cors = require("../extras/corsFix");
 
 router.post("/login", cors, async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+
   const data = {
     email: req.body.email,
     password: req.body.password,
@@ -25,6 +27,7 @@ router.post("/login", cors, async (req, res) => {
 });
 
 router.get("/verifyToken", cors, auth.admin, (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   res.json({ authorized: true });
 });
 

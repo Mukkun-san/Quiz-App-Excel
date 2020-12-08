@@ -67,6 +67,8 @@ router.get("/all", cors, authorize.admin, (req, res) => {
 //--------- BEGIN Student Requests ----------//
 
 router.post("/signup", cors, async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+
   const data = {
     name: req.body.fullName,
     email: req.body.email,
@@ -122,6 +124,8 @@ router.post("/signup", cors, async (req, res) => {
 });
 
 router.post("/login", cors, async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+
   const data = {
     email: req.body.email,
     password: req.body.password,
@@ -164,10 +168,12 @@ router.post("/login", cors, async (req, res) => {
 });
 
 router.get("/class", cors, authorize.student, (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   res.json({ auth: "" });
 });
 
 router.get("/verifyToken", cors, authorize.student, (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   res.json({ authorized: true });
 });
 
