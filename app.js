@@ -29,5 +29,9 @@ app.post("/sheet", (req, res) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.sendStatus(200);
+});
+
 const PORT = process.env.PORT || 4545;
 app.listen(PORT, () => console.log(`⚡⚡ ---> Server started on port ${PORT}`));
